@@ -445,6 +445,10 @@ bool pth_is_mod_tap_with_any_mods_of(uint16_t keycode, uint8_t mods_8_bit) {
 }
 
 bool pth_default_should_hold_instantly(uint16_t keycode, keyrecord_t* record) {
+#ifdef PTH_DONT_HOLD_INSTANTLY
+        return false;
+#endif
+
 #ifdef CAPS_WORD_ENABLE
     // Instantly holding will result in a held tap-hold key being processed,
     // thus breaking caps words.
@@ -517,6 +521,7 @@ __attribute__((weak)) bool pth_predict_fast_streak_tap(void) {
 }
 #endif // PTH_FAST_STREAK_TAP_ENABLE
 
+#ifndef PTH_DONT_HOLD_INSTANTLY
 __attribute__((weak)) bool pth_should_hold_instantly(uint16_t keycode, keyrecord_t* record) {
     return pth_default_should_hold_instantly(keycode, record);
 }
@@ -524,6 +529,7 @@ __attribute__((weak)) bool pth_should_hold_instantly(uint16_t keycode, keyrecord
 __attribute__((weak)) bool pth_second_should_hold_instantly(uint16_t second_keycode, keyrecord_t* second_record) {
     return pth_should_hold_instantly(second_keycode, second_record);
 }
+#endif // PTH_DONT_HOLD_INSTANTLY
 
 __attribute__((weak)) bool pth_should_choose_tap_when_second_is_same_side_press(void) {
     // If this is a non-tap-hold same-side second, then that implies key roll.
@@ -1717,7 +1723,12 @@ bool process_record_predictive_tap_hold(uint16_t keycode, keyrecord_t* record) {
                 }
 #endif // PTH_FAST_STREAK_TAP_ENABLE
 
+#ifdef PTH_DONT_HOLD_INSTANTLY
+                pth_was_held_instantly = false;
+#else
                 pth_was_held_instantly = pth_tap_code_instead_of_hold == KC_NO && pth_should_hold_instantly(pth_keycode, &pth_record);
+#endif // PTH_DONT_HOLD_INSTANTLY
+
                 if (pth_was_held_instantly) {
                     if (IS_QK_LAYER_TAP(keycode)) {
                         instant_layer_was_active       = true;
@@ -1790,7 +1801,11 @@ bool process_record_predictive_tap_hold(uint16_t keycode, keyrecord_t* record) {
                     return false;
                 }
 
+#ifdef PTH_DONT_HOLD_INSTANTLY
+                if (second_is_tap_hold){
+#else
                 if (second_is_tap_hold && pth_second_should_hold_instantly(second_keycode, &second_record)) {
+#endif // PTH_DONT_HOLD_INSTANTLY
                     if (!instant_layer_was_active && IS_QK_LAYER_TAP(second_keycode)) {
                         // Remember the layer in case we have to undo the
                         // instant layer switch, when tap is chosen.

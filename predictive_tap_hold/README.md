@@ -245,6 +245,8 @@ See the [Prediction Factor](#prediction-factor) section for an example of defini
 
 #### Instant Hold
 
+Add `#define PTH_DONT_HOLD_INSTANTLY` to your config.h to disable it.
+
 `bool pth_should_hold_instantly(uint16_t keycode, keyrecord_t* record)`
 
 * **What it does:** Decides if a PTH key should activate its "hold" function immediately on press.
