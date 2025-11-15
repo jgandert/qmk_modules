@@ -29,7 +29,7 @@ bool process_record_magic_layer_alt_tab(uint16_t keycode, keyrecord_t *record) {
     const bool is_alt_tab_key = keycode == LALT(KC_TAB) || keycode == LSA(KC_TAB);
 
     if (!is_alt_tab_key || !IS_LAYER_ON(MAGIC_LAYER_ALT_TAB_LAYER)) {
-        if (alt_tab_running && keycode != KC_BTN1) {
+        if (alt_tab_running && keycode != MS_BTN1) {
             disable_magic_layer_alt_tab();
         }
         return true;
