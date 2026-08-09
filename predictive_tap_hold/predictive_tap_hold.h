@@ -216,6 +216,7 @@ bool pth_is_fast_streak_tap_key(uint16_t keycode);
 bool pth_predict_fast_streak_tap(void);
 #endif // PTH_FAST_STREAK_TAP_ENABLE
 
+#ifndef PTH_DONT_HOLD_INSTANTLY
 /**
  * @brief Decide if the PTH should be treated as HELD immediately on press.
  *        The provisional hold will be reverted if the final decision is TAP.
@@ -234,6 +235,7 @@ bool pth_should_hold_instantly(uint16_t keycode, keyrecord_t* record);
  * By default, just calls `pth_should_hold_instantly`.
  */
 bool pth_second_should_hold_instantly(uint16_t second_keycode, keyrecord_t* second_record);
+#endif // PTH_DONT_HOLD_INSTANTLY
 
 /**
  * @brief Decides whether to resolve PTH as TAP when a second key is pressed
