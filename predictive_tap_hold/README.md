@@ -569,9 +569,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             if (record->tap.count) {
                 // tap was chosen
                 if (record->event.pressed) {
-                    register_code16(KC_BTN1);
+                    register_code16(MS_BTN1);
                 } else {
-                    unregister_code16(KC_BTN1);
+                    unregister_code16(MS_BTN1);
                 }
             }
             return false;
