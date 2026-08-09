@@ -182,7 +182,7 @@ typedef enum {
 // Side configuration (weakly defined in .c, potentially overridden by user)
 //=============================================================================
 
-// You have to overwrite this or `pth_is_on_left_hand` to define which keys are left
+// You have to overwrite this or `pth_side_layout` to define which keys are left
 // and which are right. There is no default here!
 /**
  * @param record The keyrecord_t associated with the event.
