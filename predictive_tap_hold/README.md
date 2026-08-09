@@ -100,6 +100,17 @@ Alternatively, you can implement the `pth_get_side` function, as shown in the [*
 
 ✅ Your keyboard is now ready to be compiled and flashed.
 
+### Disabling
+
+If you want to temporarily turn off this module functionality without reverting all changes above, include this on your `config.h`:
+
+```c
+#define PTH_DISABLED
+
+```
+
+You will probably want to set TAPPING_TERM to its previous value as well.
+
 ### Usage with QMK's Tap-Hold Logic
 
 You don't have to go all-in. You can use PTH for some keys and QMK's standard `TAPPING_TERM` logic for others.
